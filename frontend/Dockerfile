@@ -14,6 +14,6 @@ RUN npm install
 # Copia el resto de la aplicación
 COPY . .
 
-EXPOSE 3001
+EXPOSE 3000
 
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start"]

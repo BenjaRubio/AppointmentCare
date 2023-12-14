@@ -6,26 +6,28 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: api
-    command: 'npm run start'
+    working_dir: /app/backend
+    command: 'npm run start:dev'
     ports:
-      - '8080:8080'
+      - '3001:3001'
     depends_on:
-      - mongodb
-    env_file: .env
+      - db
+    env_file: ./backend/.env
     volumes:
-      - './src:/app/src'
+      - './:/app/backend'
       - '/app/node_modules'
     networks:
       - node-network
 
-  mongodb:
-    image: mongo:4.4.6
-    container_name: mongo
-    restart: always
-    ports:
-      - '27017:27017'
+  db:
+    image: postgres:latest
+    container_name: db_postgres
     volumes:
-      - dbdata:/data/db
+      - db_volume:/var/lib/postgresql/data 
+    env_file:
+      - ./backend/.env
+    ports:
+      - "5432:5432"
     networks:
       - node-network
 
@@ -34,14 +36,22 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     image: node:lts-alpine
+    working_dir: /app/frontend
+    command: "npm run start"
     ports:
-      - "3000:80"
+      - "3000:3000"
     restart: always
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - './:/app/frontend'
+    depends_on:
+      - api
     networks:
       - node-network
 
 volumes:
-  dbdata:
+  db_volume:
 
 networks:
   node-network:

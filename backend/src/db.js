@@ -1,14 +1,12 @@
-// import config from '@config/config';
-import mongoose from 'mongoose';
+const db = require('./models/index')
 
-const connect = async () => {
-  try {
-    await mongoose.connect(config.mongoUrl);
-    console.log('Connected to MongoDB!');
-  } catch (err) {
-    console.log(`MongoDB connection error: ${err.message}`);
-    throw new Error(err.message);
-  }
+const connectDB = async () => {
+    try {
+      await db.sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+    }
 };
 
-export default { connect };
+module.exports = { connectDB }

@@ -4,7 +4,7 @@ import ProfessionalCalendar from './professionalCalendarView/ProfessionalCalenda
 
 const CalendarContainer = () => {
 
-    const userRole = 'professional';
+    const userRole = 'patient';
 
     return (
         <div>
