@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+:root {
+    --clr-main: #8f5da7;
+    --clr-main-light: #efdaf9;
+}
+
+.navbar {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--clr-main);
+    border-bottom: 3px solid black;
+}
+
+.professional-calendar-container {
+    display: flex;
+    width: 80%;
+}
+
+.date-picker-container,
+.available-list-container {
+  flex: 1;
+  padding: 20px;
+}
+
+.patient-calendar-container {
+    display: flex;
+    width: 80%;
+}
+
+.professional-dates-display {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 5rem;
+}
+
+.professional-date {
+    flex: 1;
+    padding: 20px;
+}
+
+.professional-available-calendar,
+.professional-card {
+    flex: 1;
+    padding: 20px;
+}
+
+
+
+.menu {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.menu-link:hover {
+    text-decoration: underline;
+}
+
+.column-form-modal {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    align-items: flex-start;
+}
+
+.row-form-modal {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: flex-start;
+}
