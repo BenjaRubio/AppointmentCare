@@ -31,3 +31,94 @@ El frontend del proyecto esta hecho en React, para ejecutarlo debemos movernos a
 ```npm start```
 
 Luego, se abrirá en el navegador ```http://localhost:3000```, y se tendrá acceso al proyecto.
+
+<br />
+
+<br />
+
+## Esquema de base de datos
+
+<br />
+
+<br />
+
+
+### Modelos:
+
+<br />
+
+**Patient**:  
+- id  (int, primaryKey)   
+- name  (string)  
+- lastname   (string)  
+- email   (string)  
+- password   (string)  
+- role   (string)  
+
+
+**Professional**:  
+- id  (int, primaryKey)  
+- name   (string)  
+- lastname   (string)  
+- email   (string)  
+- password   (string)  
+- role   (string)  
+- specialty   (string)  
+
+
+
+**AvailableDate**:  
+- id  (int, primaryKey)  
+- professionalId  (int, foreignKey)  
+- day   (date)  
+- block  (int)  
+- available  (boolean)  
+
+
+
+**Appointment**:  
+- id (int, primaryKey)  
+- patientId (int, foreignKey)  
+- professionalId (int, foreignKey)  
+- day  (date)  
+- block (int)   
+  
+
+### Asociaciones  
+
+<br />
+
+Patient **hasMany** Appointment  
+
+Professional **hasMany** AvailableDate  
+Professional **hasMany** Appointment  
+
+AvailableDate **belongsTo** Professional  
+
+Appointment **belongsTo** Patient  
+Appointment **belongsTo** Professional  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
