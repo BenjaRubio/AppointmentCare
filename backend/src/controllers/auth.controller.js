@@ -24,6 +24,7 @@ const login = async(req, res) => {
         }
 
         await checkPassword(password, user.password);
+        user.password = '';
         res.status(200).send({
             message: "Login successful",
             user: user
@@ -48,15 +49,15 @@ const register = async(req, res) => {
         let user;
         if (role === 'patient') {
             await checkPatientRegistration(email);
-            user = createPatient(userData)
+            user = await createPatient(userData)
         } else if (role === 'professional') {
             await checkProfessionalRegistration(email);
-            user = createProfessional({
+            user = await createProfessional({
                 ...userData,
                 specialty
             })
         }
-
+        user.password = '';
         res.status(200).send({
             message: `User created successfully`,
             user: user

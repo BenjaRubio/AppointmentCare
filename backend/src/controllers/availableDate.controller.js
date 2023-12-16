@@ -13,7 +13,7 @@ const getAvailableDatesByProfessional = async(req, res) => {
         });
     } catch (err) {
         console.error(err.message);
-        res.send(400).send({ message: err.message });
+        res.status(400).send({ message: err.message });
     }
 };
 
@@ -26,7 +26,7 @@ const getAllAvailableDates = async(req, res) => {
         });
     } catch (err) {
         console.error(err.message);
-        res.send(400).send({ message: err.message });
+        res.status(400).send({ message: err.message });
     }
 }
 

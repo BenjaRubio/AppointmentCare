@@ -26,10 +26,12 @@ const createAvailableDate = async(req, res) => {
             timeRange
         });
         res.status(200).send({
-            message: "Available date created successfully",
-            professional
+            message: "Available date created successfully"
         });
-    } catch (err) {}
+    } catch (err) {
+        console.error(err.message);
+        res.status(400).send({ message: err.message });
+    }
 }
 
 module.exports = {

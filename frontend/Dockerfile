@@ -8,12 +8,16 @@ WORKDIR /app
 COPY package*.json ./
 COPY .env ./
 
-# Instala las dependencias
 RUN npm install
 
-# Copia el resto de la aplicación
 COPY . .
+# Instala las dependencias
+RUN npm run build
+RUN npm install -g serve
+
+# Copia el resto de la aplicación
+
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["serve", "-s", "build"]

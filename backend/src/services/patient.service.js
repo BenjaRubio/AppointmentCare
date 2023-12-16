@@ -18,7 +18,6 @@ const readByEmail = async(email) => {
     if (!patient) {
         throw new Error('Patient not found');
     }
-    patient.password = '';
     return patient;
 };
 

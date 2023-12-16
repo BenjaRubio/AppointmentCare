@@ -14,7 +14,7 @@ services:
       - db
     env_file: ./backend/.env
     volumes:
-      - './:/app/backend'
+      - './backend/:/app'
       - '/app/node_modules'
     networks:
       - node-network
@@ -28,25 +28,6 @@ services:
       - ./backend/.env
     ports:
       - "5432:5432"
-    networks:
-      - node-network
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    image: node:lts-alpine
-    working_dir: /app/frontend
-    command: "npm run start"
-    ports:
-      - "3000:3000"
-    restart: always
-    env_file:
-      - ./frontend/.env
-    volumes:
-      - './:/app/frontend'
-    depends_on:
-      - api
     networks:
       - node-network
 

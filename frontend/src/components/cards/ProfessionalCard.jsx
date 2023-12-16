@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from 'react';
-
+import { getProfessionalById} from '../../services/professional.service';
 
 const ProfessionalCard = (props) => {
 
-    const [fullName, setFullName] = useState('');
-    const [specialty, setSpecialty] = useState('');
+    const professionalId = props.professionalId;
+    const [professional, setProfessional] = useState(null);
 
     useEffect(() => {
-        setFullName(props.name + ' ' + props.lastName);
-        setSpecialty(props.specialty);
+        const getProfessional = async () => {
+            try {
+                const response = await getProfessionalById(professionalId);
+                console.log("professional", response.professional)
+                setProfessional(response.professional);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        console.log("props", props);
+        getProfessional();
     }, [])
     
     return (
         <div>
-            {/* <h3>{fullName}</h3>
-            <h4>{specialty}</h4> */}
-            <h3>Benjamin Rubio</h3>
-            <h4>Medico General</h4>
+            <h2>{professional?.name} {professional?.lastname}</h2>
+            <h4>{professional?.specialty}</h4>
         </div>
     )
 }

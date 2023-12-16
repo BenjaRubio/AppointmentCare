@@ -8,15 +8,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
+import { sendLogin } from '../../services/authentication.service';
+import { saveUser } from '../../services/user.service';
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (event) => {
+  
+  const handleSubmit = async(event) => {
     event.preventDefault();
   
     if (!email || !password || !role) {
@@ -29,6 +34,22 @@ const LoginForm = () => {
     console.log('role:', role);
 
     setError('');
+
+    try {
+      const response = await sendLogin({
+        email,
+        password,
+        role
+      });
+      console.log('response:', response);
+      setUser(response.user);
+      saveUser(response.user);
+      navigate('/');
+      alert('Sesión iniciada correctamente');
+    } catch (err) {
+      console.log('error:', err);
+      setError('Error al iniciar sesión');
+    }
   };
 
   return (
@@ -49,6 +70,7 @@ const LoginForm = () => {
           <br />
           <TextField
             required
+            type="password"
             id="password"
             label="Contraseña"
             value={password}
@@ -83,63 +105,7 @@ const LoginForm = () => {
     </div>
   )
 
-  // return (
-  //   <div>
-  //     <form onSubmit={handleSubmit}>
-  //       <label>
-  //         Email:<br />
-  //         <input
-  //           type="text"
-  //           value={email}
-  //           onChange={(e) => setEmail(e.target.value)}
-  //         />
-  //       </label>
-  //       <br />
-  //       <label>
-  //         Contraseña:<br />
-  //         <input
-  //           type="password"
-  //           value={password}
-  //           onChange={(e) => setPassword(e.target.value)}
-  //         />
-  //       </label>
-  //       <br />
-  //       <label>
-  //         Soy un:<br />
-  //         <label>
-  //           <input
-  //             type="radio"
-  //             value="patient"
-  //             checked={role === 'patient'}
-  //             onChange={() => setRole('patient')}
-  //           />
-  //           Paciente
-  //         </label>
-  //         <br />
-  //         <label>
-  //           <input
-  //             type="radio"
-  //             value="professional"
-  //             checked={role === 'professional'}
-  //             onChange={() => setRole('professional')}
-  //           />
-  //           Profesional de la salud
-  //         </label>
-  //       </label>
-  //       <br />
-  //       <button type="submit">Iniciar sesión</button>
-  //     </form>
-  
-  //     {error && <p style={{ color: 'red' }}>{error}</p>}
 
-  //     <div>
-  //       <p>
-  //         ¿No tienes cuenta? 
-  //         <Link to="/register"> Regístrate</Link>
-  //       </p>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default LoginForm;

@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copia los archivos necesarios para la instalación de dependencias
 COPY package*.json ./
-COPY .env ./
+# COPY .env ./
 
 # Instala las dependencias
 RUN npm install
@@ -16,4 +16,4 @@ COPY . .
 
 EXPOSE 3001
 
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "start:dev"]

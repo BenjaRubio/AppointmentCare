@@ -1,5 +1,5 @@
 
-const { Appointment } = require('../models/index');
+const { Appointment, Professional } = require('../models/index');
 
 const readByPatientId = async (patientId) => {
     const appointments = await Appointment.findAll({
@@ -8,7 +8,8 @@ const readByPatientId = async (patientId) => {
         },
         include: [
             {
-                association: 'professional',
+                model: Professional,
+                as: 'Professional',
                 attributes: ['id', 'name', 'lastname', 'email', 'specialty']
             }
         ]
@@ -16,9 +17,16 @@ const readByPatientId = async (patientId) => {
     return appointments;
 };
 
+const create = async (appointment) => {
+    const createdAppointment = await Appointment.build(appointment);
+    await createdAppointment.save();
+    return createdAppointment;
+}
+
 
 module.exports = {
-    readByPatientId
+    readByPatientId,
+    create
 }
 
 

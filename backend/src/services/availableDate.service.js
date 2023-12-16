@@ -1,5 +1,6 @@
 const { blocks, blocksStartTime } = require('../utils/blocks');
-const { AvailableDate } = require('../models/index');
+const { AvailableDate, Professional } = require('../models/index');
+const {getDatesByProfessional} = require('../utils/availableDatesTransformation');
 
 const desgloseTimeRange = (timeRange) => {
     const [start, end] = timeRange.split('-');
@@ -19,9 +20,10 @@ const readAvailableDatesByProfessional = async(professionalId) => {
         }
     });
     const noBlockDates = availableDates.map((availableDate) => {
+        let av = availableDate.dataValues;
         return {
-            ...availableDate,
-            block: blocks[availableDate.block]
+            ...av,
+            block: blocks[av.block]
         }
     });
     return noBlockDates;
@@ -31,19 +33,22 @@ const readAllAvailableDates = async() => {
     const availableDates = await AvailableDate.findAll({
         include: [
             {
-                association: 'professional',
+                model: Professional,
+                as: 'Professional',
                 attributes: ['id', 'name', 'lastname', 'email', 'specialty']
             }
         ],
-        group: ['professionalId', 'day', 'block']
+        group: ['AvailableDate.id', 'Professional.id', 'day', 'block']
     });
     const noBlockDates = availableDates.map((availableDate) => {
+        let av = availableDate.dataValues;
         return {
-            ...availableDate,
-            block: blocks[availableDate.block]
+            ...av,
+            block: blocks[av.block]
         }
     });
-    return noBlockDates;
+    const orderedDates = getDatesByProfessional(noBlockDates);
+    return orderedDates;
 };
 
 module.exports = {

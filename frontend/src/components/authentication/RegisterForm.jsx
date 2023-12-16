@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { sendRegistration } from '../../services/authentication.service';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -9,23 +10,27 @@ const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
-  const {speciality, setSpeciality} = useState('');
+  const [specialty, setSpecialty] = useState('');
 
   const [error, setError] = useState('');
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    if (!email || !password || !role || !lastname || !name || (role === 'professional' && !speciality)) {
+    if (!email || !password || !role || !lastname || !name || (role === 'professional' && !specialty)) {
         setError('Debes rellenar todos los campos');
         return;
     }
-    // generar el registro en el backend
-    console.log('email:', email);
-    console.log('password:', password);
-    console.log('role:', role);
-    console.log('name:', name);
-    console.log('lastname:', lastname);
     setError('');
+
+    try {
+      const response = await sendRegistration({name, lastname, email, password, role, specialty});
+      console.log('response:', response);
+      navigate('/login');
+    } catch (error) {
+      console.log('error:', error);
+      setError('Error al registrarse');
+    }
   };
 
   return (
@@ -96,8 +101,8 @@ const RegisterForm = () => {
             Especialidad:<br />
             <input
               type="text"
-              value={speciality}
-              onChange={(e) => setSpeciality(e.target.value)}
+              value={specialty}
+              onChange={(e) => setSpecialty(e.target.value)}
             />
           </label>}
         <button type="submit">Registrarse</button>

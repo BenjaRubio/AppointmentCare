@@ -85,3 +85,27 @@
     gap: .5rem;
     align-items: flex-start;
 }
+
+.buttons-in-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+#dropdown-button {
+    background-color: var(--clr-main);
+    color: white;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#dropdown-item {
+    background-color: rgb(115, 179, 244);
+    color: black;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

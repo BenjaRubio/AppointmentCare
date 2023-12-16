@@ -22,7 +22,6 @@ const readByEmail = async(email) => {
     if (!professional) {
         throw new Error('Professional not found');
     }
-    professional.password = '';
     return professional;
 };
 

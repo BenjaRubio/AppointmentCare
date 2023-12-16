@@ -1,5 +1,8 @@
 const { readById } = require("../services/patient.service");
-const {readByPatientId} = require("../services/appointment.service");
+const {
+    readByPatientId,
+    create: createAppointmentForPatient
+} = require("../services/appointment.service");
 
 const getPatient = async (req, res) => {
     try {
@@ -31,7 +34,12 @@ const getPatientAppointments = async (req, res) => {
 
 const createAppointment = async (req, res) => {
     try {
-        const { patientId, professionalId, day, block } = req.body;
+        // const { patientId, professionalId, day, block } = req.body;
+        const appointment = await createAppointmentForPatient(req.body);
+        res.status(200).send({
+            message: "Appointment created successfully",
+            appointment
+        });
     } catch (err) {
         console.error(err.message);
         res.status(400).send({ message: err.message });
